@@ -34,10 +34,11 @@ async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def Activate_bot():
     # pwd
-    if not os.path.exists("png"):
-        os.mkdir("png")
-    if not os.path.exists("resized_png"):
-        os.mkdir("resized_png")  
+    pwd = os.getcwd()
+    if not os.path.exists(f"{pwd}/png"):
+        os.mkdir(f"{pwd}/png")
+    if not os.path.exists(f"{pwd}/resized_png"):
+        os.mkdir(f"{pwd}/resized_png")  
     print("Hasaki 吹起來")   
     start_handler = CommandHandler('start', start)
     throughput_handler = CommandHandler('throughput', throughput)
@@ -58,13 +59,16 @@ def throughput_loop():
         ts_now, ts_before = ts_generator()
         img_name = get_Image(ts_now, ts_before)
         resized_image = image_Crop(img_name)
+        print("Sending photo .....")
         SendPhoto(resized_image)
         time.sleep(30)
 
 def main():
     process_lists = []
+    print("bot added")
     process_lists.append(mp.Process(target=Activate_bot))
     process_lists[0].start()
+    print("loop added")
     process_lists.append(mp.Process(target=throughput_loop))
     process_lists[1].start()
 
