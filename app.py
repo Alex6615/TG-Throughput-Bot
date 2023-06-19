@@ -62,7 +62,7 @@ def throughput_loop():
         print("Sending photo .....")
         SendPhoto(resized_image)
         print("Send photo complete !")
-        time.sleep(30)
+        time.sleep(60)
 
 def main():
     process_lists = []
