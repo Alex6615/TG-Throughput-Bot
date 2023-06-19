@@ -6,7 +6,7 @@ from datetime import datetime
 def isoclock() -> bool: 
     nows = int(time.time())
     dt = datetime.fromtimestamp(nows)
-    if dt.minute == 0 :
+    if dt.minute == 0 or dt.minute == 30 :
         return True
     else :
         return False
