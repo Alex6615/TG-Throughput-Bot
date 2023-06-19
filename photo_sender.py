@@ -10,7 +10,7 @@ def SendPhoto(photo_name):
     # mis_alert chat-id
     mis_alert = "-1001507912886"
     url = f"https://api.telegram.org/bot5780018337:AAG8qusjqd1xYrPG4iI3yrJm1dHvyRZjlU8/sendPhoto?chat_id={mis_alert}"
-    file = f"/Users/alex.li/Projects/Throughput_bot/resized_png/{photo_name}"
+    file = f"/Throughput_bot/resized_png/{photo_name}"
     files = {
         'photo': open(file, 'rb')
     }
