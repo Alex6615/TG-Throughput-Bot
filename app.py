@@ -61,6 +61,7 @@ def throughput_loop():
         resized_image = image_Crop(img_name)
         print("Sending photo .....")
         SendPhoto(resized_image)
+        print("Send photo complete !")
         time.sleep(30)
 
 def main():
