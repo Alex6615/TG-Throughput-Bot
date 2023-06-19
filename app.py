@@ -63,8 +63,5 @@ def main():
     for process in process_lists :
         process.join()
 
-
-
 if __name__ == '__main__':
     main()
-    #Activate_bot()

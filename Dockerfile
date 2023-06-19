@@ -5,6 +5,7 @@ FROM python:3.9.15-alpine
 RUN apk upgrade
 RUN apk --update \
     add gcc \
+    chromium-chromedriver \
     make \
     build-base \
     g++
