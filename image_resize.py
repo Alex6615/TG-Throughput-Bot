@@ -10,6 +10,7 @@ def image_Crop(img_name):
     box = (0, 100, 800, 500)
     resized = img.crop(box)
     resized.save(f"{pwd}/resized_png/r-{img_name}")
+    return f"r-{img_name}"
 
 
 if __name__ == "__main__" :

@@ -13,7 +13,8 @@ from secret_telegram import TELEGRAM_TOKEN
 from driver_execute import get_Image
 from image_resize import image_Crop
 from time_generator import ts_generator
-
+from photo_sender import SendPhoto
+from oclock import isoclock
 
 
 t_token = TELEGRAM_TOKEN
@@ -32,11 +33,12 @@ async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_photo(chat_id=update.effective_chat.id, photo=f"./resized_png/r-{img_name}")
 
 def Activate_bot():
+    # pwd
     if not os.path.exists("png"):
         os.mkdir("png")
     if not os.path.exists("resized_png"):
         os.mkdir("resized_png")  
-    print("hasaki")   
+    print("Hasaki 吹起來")   
     start_handler = CommandHandler('start', start)
     throughput_handler = CommandHandler('throughput', throughput)
     application = ApplicationBuilder().token(t_token).build()
@@ -47,11 +49,17 @@ def Activate_bot():
 def throughput_loop(): 
     #session = requests.session()
     while(loop_status):
-        #ts_now, ts_before = ts_generator()
-        #img_name = get_Image(ts_now, ts_before)
-        #image_Crop(img_name)
         print(f"looping {random.randrange(1,100,2)}")
-        time.sleep(1)
+        oclock = isoclock()
+        print(f"Is oclock ?  {oclock}")
+        if oclock == False :
+            time.sleep(30)
+            continue
+        ts_now, ts_before = ts_generator()
+        img_name = get_Image(ts_now, ts_before)
+        resized_image = image_Crop(img_name)
+        SendPhoto(resized_image)
+        time.sleep(30)
 
 def main():
     process_lists = []
