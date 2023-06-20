@@ -1,5 +1,6 @@
 import os 
 import time
+from datetime import datetime
 import multiprocessing as mp
 import random
 
@@ -50,15 +51,20 @@ def Activate_bot():
 def throughput_loop(): 
     #session = requests.session()
     while(loop_status):
-        print(f"looping {random.randrange(1,100,2)}")
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        # print(f"looping {random.randrange(1,100,2)}")
         oclock = isoclock()
-        print(f"Is oclock ?  {oclock}")
+        print(f"[{current_time}] Is oclock ?  {oclock}")
         if oclock == False :
             time.sleep(30)
             continue
-        ts_now, ts_before = ts_generator()
-        img_name = get_Image(ts_now, ts_before)
-        resized_image = image_Crop(img_name)
+        try :
+            ts_now, ts_before = ts_generator()
+            img_name = get_Image(ts_now, ts_before)
+            resized_image = image_Crop(img_name)
+        except :
+            continue
         print("Sending photo .....")
         SendPhoto(resized_image)
         print("Send photo complete !")
