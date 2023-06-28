@@ -14,8 +14,9 @@ from secret_telegram import TELEGRAM_TOKEN
 from driver_execute import get_Image
 from image_resize import image_Crop
 from time_generator import ts_generator
-from photo_sender import SendPhoto
+from telegram_sender import SendPhoto, SendText
 from oclock import isoclock
+from query_tools import Get_Wking_UserCount
 
 
 t_token = TELEGRAM_TOKEN
@@ -24,6 +25,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="📘 I'm a throughput Bot")
 
 async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print(update)
     print("generating timestamps ....")
     ts_now, ts_before = ts_generator()
     print("downloading image ....")
@@ -65,6 +67,9 @@ def throughput_loop():
             resized_image = image_Crop(img_name)
         except :
             continue
+        usercount = Get_Wking_UserCount()
+        reply = '🌏 Wking Online Users Now : ' + usercount
+        SendText(reply)
         print("Sending photo .....")
         SendPhoto(resized_image)
         print("Send photo complete !")
