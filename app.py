@@ -25,7 +25,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="📘 I'm a throughput Bot")
 
 async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    print(update)
     print("generating timestamps ....")
     ts_now, ts_before = ts_generator()
     print("downloading image ....")
@@ -34,6 +33,10 @@ async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
     image_Crop(img_name)
     print("Image resized complete !")
     await context.bot.send_photo(chat_id=update.effective_chat.id, photo=f"./resized_png/r-{img_name}")
+
+async def count(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    x = Get_Wking_UserCount()
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=x)
 
 def Activate_bot():
     # pwd
@@ -44,10 +47,12 @@ def Activate_bot():
         os.mkdir(f"{pwd}/resized_png")  
     print("Hasaki 吹起來")   
     start_handler = CommandHandler('start', start)
+    count_handler = CommandHandler('count', count)
     throughput_handler = CommandHandler('throughput', throughput)
     application = ApplicationBuilder().token(t_token).build()
     application.add_handler(start_handler)
     application.add_handler(throughput_handler)
+    application.add_handler(count_handler)
     application.run_polling()
 
 def throughput_loop(): 

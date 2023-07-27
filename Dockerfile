@@ -8,7 +8,9 @@ RUN apk --update \
     chromium-chromedriver \
     make \
     build-base \
-    g++
+    g++ \
+    # https://ssndhu01.medium.com/chromium-zombie-process-in-docker-container-e9374d2ed825
+    dumb-init 
 #    add chromium-chromedriver  \
 #    openjdk11 \
 #    git \
@@ -32,4 +34,5 @@ RUN echo "0       0       *       *       *       python3  /Throughput_bot/image
 # EXPOSE 9453
 
 # Run the application
-ENTRYPOINT ["python3", "app.py"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["python3", "app.py"]

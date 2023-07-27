@@ -11,10 +11,12 @@ def Get_Wking_UserCount():
         'Authorization' : 'Bearer glsa_qOHsDNPG4z8Hr87LlXgpBzQokb91s2Xn_79ffa6a3'   
     }
     response = session.get('https://wking-users.owin.info/api/User/onlineusers', headers = headers, verify=False)
+    
     user_count = json.loads(response.content).split()[-1]
     session.close()
     return user_count
 
 
 if __name__ == "__main__" :
-    pass
+    x = Get_Wking_UserCount()
+    print(x)
