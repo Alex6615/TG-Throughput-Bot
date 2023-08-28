@@ -15,7 +15,7 @@ from driver_execute import get_Image
 from image_resize import image_Crop
 from time_generator import ts_generator
 from telegram_sender import SendPhoto, SendText
-from oclock import isoclock
+from oclock import isoclock, isfive
 from query_tools import Get_Wking_UserCount
 
 
@@ -61,9 +61,9 @@ def throughput_loop():
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         # print(f"looping {random.randrange(1,100,2)}")
-        oclock = isoclock()
-        print(f"[{current_time}] Is oclock ?  {oclock}")
-        if oclock == False :
+        isfive = isfive()
+        print(f"[{current_time}] Is oclock ?  {isfive}")
+        if isfive == False :
             time.sleep(30)
             continue
         try :

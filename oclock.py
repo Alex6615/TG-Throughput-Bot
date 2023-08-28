@@ -10,3 +10,11 @@ def isoclock() -> bool:
         return True
     else :
         return False
+    
+def isfive() -> bool: 
+    nows = int(time.time())
+    dt = datetime.fromtimestamp(nows)
+    if dt.minute % 5 == 0 :
+        return True
+    else :
+        return False
