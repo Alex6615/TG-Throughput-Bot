@@ -11,7 +11,7 @@ def isoclock() -> bool:
     else :
         return False
     
-def isfive() -> bool: 
+def minuteisfive() -> bool: 
     nows = int(time.time())
     dt = datetime.fromtimestamp(nows)
     if dt.minute % 5 == 0 :
