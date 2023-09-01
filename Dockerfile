@@ -28,7 +28,7 @@ RUN rm -rf /Throughput_bot/secrets
 RUN rm -rf /Throughput_bot/build
 RUN rm -r ~/.cache/pip    
 
-RUN echo "0       0       *       *       *       python3  /Throughput_bot/image_cleanup.py > /Throughput_bot/cleanup_job.log " >> /etc/crontabs/root
+RUN echo "0       */12       *       *       *       python3  /Throughput_bot/image_cleanup.py > /Throughput_bot/cleanup_job.log " >> /etc/crontabs/root
 
 # Listen port
 # EXPOSE 9453
