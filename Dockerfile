@@ -27,6 +27,9 @@ RUN python3 /Throughput_bot/secrets/setup.py build_ext --inplace
 RUN rm -rf /Throughput_bot/secrets
 RUN rm -rf /Throughput_bot/build
 RUN rm -r ~/.cache/pip    
+RUN chmod 755 /Throughput_bot/image_cleanup.py
+
+
 
 RUN echo "0       */12       *       *       *       python3  /Throughput_bot/image_cleanup.py > /Throughput_bot/cleanup_job.log " >> /etc/crontabs/root
 
@@ -35,4 +38,4 @@ RUN echo "0       */12       *       *       *       python3  /Throughput_bot/im
 
 # Run the application
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["python3", "app.py"]
+CMD ["bash", "-c", "crond && python3", "app.py"]

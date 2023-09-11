@@ -1,6 +1,6 @@
 import json
 import requests
-
+from secret_account import wking_api
 
 
 def Get_Wking_UserCount():
@@ -8,9 +8,8 @@ def Get_Wking_UserCount():
     headers = {
         'Accept' : 'application/json',
         'Content-Type' : 'application/json',
-        'Authorization' : 'Bearer glsa_qOHsDNPG4z8Hr87LlXgpBzQokb91s2Xn_79ffa6a3'   
     }
-    response = session.get('https://wking-users.owin.info/api/User/onlineusers', headers = headers, verify=False)
+    response = session.get(wking_api, headers = headers, verify=False)
     
     user_count = json.loads(response.content).split()[-1]
     session.close()
