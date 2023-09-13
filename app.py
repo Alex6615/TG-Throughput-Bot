@@ -10,8 +10,15 @@ import asyncio
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Updater, ApplicationBuilder, ContextTypes, CommandHandler
 
-from secret_telegram import TELEGRAM_TOKEN
-from secret_account import allow_groups
+
+try :
+    from secret_account import allow_groups
+    from secret_telegram import TELEGRAM_TOKEN
+except :
+    from secret_account_local import allow_groups
+    from secret_telegram_local import TELEGRAM_TOKEN
+#from secret_telegram_local import TELEGRAM_TOKEN
+#from secret_account_local import allow_groups
 from driver_execute import get_Image
 from image_resize import image_Crop
 from time_generator import ts_generator

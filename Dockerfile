@@ -38,4 +38,4 @@ RUN echo "0       */12       *       *       *       python3  /Throughput_bot/im
 
 # Run the application
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["sh", "-c", "crond && python3", "app.py"]
+CMD ["sh", "-c", "crond && python3 app.py"]

@@ -1,6 +1,9 @@
 import json
 import requests
-from secret_account import wking_api
+try :
+    from secret_account import wking_api
+except :
+    from secret_account_local import wking_api
 
 
 def Get_Wking_UserCount():
