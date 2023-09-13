@@ -7,3 +7,4 @@ pyvenv.cfg
 __pycache__
 .DS_Store
 secrets/*local.py
+secrets/__init__.py

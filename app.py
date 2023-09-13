@@ -11,6 +11,7 @@ from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Updater, ApplicationBuilder, ContextTypes, CommandHandler
 
 from secret_telegram import TELEGRAM_TOKEN
+from secret_account import allow_groups
 from driver_execute import get_Image
 from image_resize import image_Crop
 from time_generator import ts_generator
@@ -21,10 +22,6 @@ from query_tools import Get_Wking_UserCount
 
 t_token = TELEGRAM_TOKEN
 loop_status = True
-allow_groups = [
-    -1001507912886,
-    -1001935582944,
-]
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.chat.id not in allow_groups :
