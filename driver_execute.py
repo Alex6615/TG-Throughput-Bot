@@ -6,7 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup as bs4
 
 from driver_config import get_ChromeDriver
-from secret_account import account, password, grafana
+from secret_account_local import account, password, grafana
 from time_generator import ts_generator
 
 

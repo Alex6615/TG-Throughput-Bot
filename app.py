@@ -10,7 +10,7 @@ import asyncio
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Updater, ApplicationBuilder, ContextTypes, CommandHandler
 
-from secret_telegram import TELEGRAM_TOKEN
+from secret_telegram_local import TELEGRAM_TOKEN
 from driver_execute import get_Image
 from image_resize import image_Crop
 from time_generator import ts_generator
@@ -21,10 +21,21 @@ from query_tools import Get_Wking_UserCount
 
 t_token = TELEGRAM_TOKEN
 loop_status = True
+allow_groups = [
+    -1001507912886,
+    -1001935582944,
+]
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.chat.id not in allow_groups :
+        print(f"Group {update.message.chat.id} not allow !")
+        return
     await context.bot.send_message(chat_id=update.effective_chat.id, text="📘 I'm a throughput Bot")
 
 async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.chat.id not in allow_groups :
+        print(f"Group {update.message.chat.id} not allow !")
+        return
     print("generating timestamps ....")
     ts_now, ts_before = ts_generator()
     print("downloading image ....")
@@ -35,6 +46,9 @@ async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_photo(chat_id=update.effective_chat.id, photo=f"./resized_png/r-{img_name}")
 
 async def count(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.chat.id not in allow_groups :
+        print(f"Group {update.message.chat.id} not allow !")
+        return
     x = Get_Wking_UserCount()
     await context.bot.send_message(chat_id=update.effective_chat.id, text=x)
 
