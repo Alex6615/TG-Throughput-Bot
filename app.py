@@ -10,7 +10,7 @@ import asyncio
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Updater, ApplicationBuilder, ContextTypes, CommandHandler
 
-from secret_telegram_local import TELEGRAM_TOKEN
+from secret_telegram import TELEGRAM_TOKEN
 from driver_execute import get_Image
 from image_resize import image_Crop
 from time_generator import ts_generator

@@ -1,7 +1,7 @@
 import requests
 import os
 
-from secret_telegram_local import TELEGRAM_TOKEN, Notify_Group
+from secret_telegram import TELEGRAM_TOKEN, Notify_Group
 from query_tools import *
 
 
