@@ -4,7 +4,11 @@ try :
     from secret_account import wking_api
 except :
     from secret_account_local import wking_api
+from urllib3.exceptions import InsecureRequestWarning
 
+# Ref: https://stackoverflow.com/questions/15445981/how-do-i-disable-the-security-certificate-check-in-python-requests
+# Suppress only the single warning from urllib3 needed.
+requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 def Get_Wking_UserCount():
     session = requests.session()
