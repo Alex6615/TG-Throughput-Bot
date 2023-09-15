@@ -90,12 +90,25 @@ def throughput_loop():
             resized_image = image_Crop(img_name)
         except :
             continue
-        usercount = Get_Wking_UserCount()
-        reply = '🌏 Wking Online Users Now : ' + usercount
-        SendText(reply)
-        print("Sending photo .....")
-        SendPhoto(resized_image)
-        print("Send photo complete !")
+        try :
+            usercount = Get_Wking_UserCount()
+            reply = '🌏 Wking Online Users Now : ' + usercount
+        except :
+            continue
+        else :
+            print("Send online users done.")
+        try :
+            SendText(reply)
+        except :
+            continue
+        else:
+            print("Sending photo .....")
+        try :
+            SendPhoto(resized_image)
+        except :
+            continue
+        else :
+            print("Send photo complete !")
         time.sleep(60)
 
 def main():
