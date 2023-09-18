@@ -3,7 +3,7 @@ import requests
 try :
     from secret_account import wking_api
 except :
-    from secret_account_local import wking_api
+    from secrets.secret_account_local import wking_api
 from urllib3.exceptions import InsecureRequestWarning
 
 # Ref: https://stackoverflow.com/questions/15445981/how-do-i-disable-the-security-certificate-check-in-python-requests

@@ -4,7 +4,7 @@ import os
 try :
     from secret_telegram import TELEGRAM_TOKEN, Notify_Group
 except :
-    from secret_telegram_local import TELEGRAM_TOKEN, Notify_Group
+    from secrets.secret_telegram_local import TELEGRAM_TOKEN, Notify_Group
 from query_tools import *
 
 

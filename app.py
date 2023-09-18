@@ -15,8 +15,8 @@ try :
     from secret_account import allow_groups
     from secret_telegram import TELEGRAM_TOKEN
 except :
-    from secret_account_local import allow_groups
-    from secret_telegram_local import TELEGRAM_TOKEN
+    from secrets.secret_account_local import allow_groups
+    from secrets.secret_telegram_local import TELEGRAM_TOKEN
 #from secret_telegram_local import TELEGRAM_TOKEN
 #from secret_account_local import allow_groups
 from driver_execute import get_Image
@@ -44,10 +44,13 @@ async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ts_now, ts_before = ts_generator()
     print("downloading image ....")
     img_name = get_Image(ts_now, ts_before)
-    print("resizing image ....")
-    image_Crop(img_name)
-    print("Image resized complete !")
-    await context.bot.send_photo(chat_id=update.effective_chat.id, photo=f"./resized_png/r-{img_name}")
+    if img_name == None :
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="Image Download Faliure !")
+    else :
+        print("resizing image ....")
+        image_Crop(img_name)
+        print("Image resized complete !")
+        await context.bot.send_photo(chat_id=update.effective_chat.id, photo=f"./resized_png/r-{img_name}")
 
 async def count(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.chat.id not in allow_groups :
@@ -78,34 +81,25 @@ def throughput_loop():
     while(loop_status):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        # print(f"looping {random.randrange(1,100,2)}")
         isfive = minuteisfive()
         print(f"[{current_time}] Is oclock ?  {isfive}")
         if isfive == False :
             time.sleep(30)
             continue
+        # online user count
+        print("Sending Online User Count.....")
+        usercount = Get_Wking_UserCount()
+        reply = '🌏 Wking Online Users Now : ' + usercount
+        SendText(reply)
         try :
             ts_now, ts_before = ts_generator()
             img_name = get_Image(ts_now, ts_before)
             resized_image = image_Crop(img_name)
-        except :
-            continue
-        print("Sending Online User Count.....")
-        try :
-            usercount = Get_Wking_UserCount()
-            reply = '🌏 Wking Online Users Now : ' + usercount
-            SendText(reply)
-        except :
-            continue
-        else :
-            print("Send Online Users Done.")
-        print("Sending photo .....")
-        try :
             SendPhoto(resized_image)
+            print("Sending photo Successful !")
         except :
-            continue
-        else :
-            print("Send photo complete !")
+            print("Sending photo Faliure !")
+            SendText("Throughput Screenshot Faliure !")
         time.sleep(60)
 
 def main():

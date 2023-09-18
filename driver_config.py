@@ -11,7 +11,9 @@ def get_ChromeDriver(
     os = "linux",
     ):
     options = webdriver.ChromeOptions()
+    options.add_argument("--window-size=1920,1080")
     if headless == True :
+        #pass
         options.add_argument('--headless')
     if autoquit == False :
         options.add_experimental_option("detach", True)
