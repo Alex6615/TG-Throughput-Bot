@@ -8,6 +8,10 @@ except :
 from query_tools import *
 
 
+proxies = {
+   'http': 'http://chtproxy.ddns.owin.info:3128',
+   'https': 'http://chtproxy.ddns.owin.info:3128',
+}
 
 def SendPhoto(photo_name):
     if len(photo_name) == 0 :
@@ -18,7 +22,7 @@ def SendPhoto(photo_name):
     files = {
         'photo': open(file, 'rb')
     }
-    req = requests.post(url = url, files = files)
+    req = requests.post(url = url, files = files, proxies=proxies)
     req.close()
 
 

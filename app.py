@@ -23,7 +23,7 @@ from driver_execute import get_Image
 from image_resize import image_Crop
 from time_generator import ts_generator
 from telegram_sender import SendPhoto, SendText
-from oclock import isoclock, minuteisfive
+from oclock import isoclock, minuteisfive, minuteisten
 from query_tools import Get_Wking_UserCount
 
 
@@ -41,7 +41,7 @@ async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
         print(f"Group {update.message.chat.id} not allow !")
         return
     print("generating timestamps ....")
-    ts_now, ts_before = ts_generator()
+    ts_now, ts_before = ts_generator(range=10)
     print("downloading image ....")
     img_name = get_Image(ts_now, ts_before)
     if img_name == None :
@@ -74,14 +74,14 @@ def Activate_bot():
     application.add_handler(start_handler)
     application.add_handler(throughput_handler)
     application.add_handler(count_handler)
-    application.run_polling()
+    application.run_polling(timeout=10, poll_interval=5)
 
 def throughput_loop(): 
     #session = requests.session()
     while(loop_status):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        isfive = minuteisfive()
+        isfive = minuteisten()
         print(f"[{current_time}] Is oclock ?  {isfive}")
         if isfive == False :
             time.sleep(30)
@@ -92,7 +92,7 @@ def throughput_loop():
         reply = '🌏 Wking Online Users Now : ' + usercount
         SendText(reply)
         try :
-            ts_now, ts_before = ts_generator()
+            ts_now, ts_before = ts_generator(range=10)
             img_name = get_Image(ts_now, ts_before)
             resized_image = image_Crop(img_name)
             SendPhoto(resized_image)
