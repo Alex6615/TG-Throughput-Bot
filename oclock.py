@@ -19,7 +19,6 @@ def minuteisfive() -> bool:
     else :
         return False
     
-
 def minuteisten() -> bool: 
     nows = int(time.time())
     dt = datetime.fromtimestamp(nows)

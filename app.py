@@ -37,6 +37,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="📘 I'm a throughput Bot")
 
 async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    #print(update.message)
     if update.message.chat.id not in allow_groups :
         print(f"Group {update.message.chat.id} not allow !")
         return
@@ -81,10 +82,10 @@ def throughput_loop():
     while(loop_status):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        isfive = minuteisten()
-        print(f"[{current_time}] Is oclock ?  {isfive}")
-        if isfive == False :
-            time.sleep(30)
+        isten = minuteisten()
+        print(f"[{current_time}] Is oclock ?  {isten}")
+        if isten == False :
+            time.sleep(45)
             continue
         # online user count
         print("Sending Online User Count.....")
@@ -97,9 +98,10 @@ def throughput_loop():
             resized_image = image_Crop(img_name)
             SendPhoto(resized_image)
             print("Sending photo Successful !")
-        except :
-            print("Sending photo Faliure !")
-            SendText("Throughput Screenshot Faliure !")
+        except Exception as e:
+            print(e)
+            #print("Sending photo Faliure !")
+            #SendText("Throughput Screenshot Faliure !")
         time.sleep(60)
 
 def main():
