@@ -20,6 +20,11 @@ def get_Image(now, before_hours):
     pwd = os.getcwd()
     driver = get_ChromeDriver()
     driver.get(f"http://{grafana}/login")
+    locator_loginpage = (By.XPATH, '//*[@id="reactRoot"]/div[1]/main/div/div[3]/div')
+    try :
+        WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_loginpage)) #最長等待10秒，每0.5秒檢查一次條件是否成立
+    except :
+        return
     # Account 位置
     account_input = driver.find_element(By.XPATH, "//*[@id='reactRoot']/div[1]/main/div/div[3]/div/div[2]/div/div/form/div[1]/div[2]/div/div/input")
     account_input.click()
@@ -32,14 +37,15 @@ def get_Image(now, before_hours):
     password_input = driver.find_element(By.XPATH, "//*[@id='reactRoot']/div[1]/main/div/div[3]/div/div[2]/div/div/form/button/span")
     password_input.click()
     time.sleep(2)
-    locator_login = (By.XPATH, '/html/body')
+    locator_loginafter = (By.XPATH, '//*[@id="reactRoot"]/div[1]/main/div[1]/div[2]')
     try :
-        WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_login)) #最長等待10秒，每0.5秒檢查一次條件是否成立
+        WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_loginafter)) #最長等待10秒，每0.5秒檢查一次條件是否成立
     except :
         return
     driver.get(f"http://{grafana}/render/d-solo/93LKRJP4z/es-goedge-log-traffic?orgId=1&refresh=30s&from={before_hours}&to={now}&panelId=69&width=1000&height=500&tz=Asia%2FTaipei")
     locator_screenshot = (By.XPATH, '/html/body/img')
     try :
+        driver.set_window_size(1920,1080)
         WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_screenshot)) #最長等待10秒，每0.5秒檢查一次條件是否成立
         driver.get_screenshot_as_file(f"{pwd}/png/throughput-{now}.png")
     except :
