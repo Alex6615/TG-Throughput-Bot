@@ -8,7 +8,7 @@ def image_Crop(img_name):
     img = Image.open(f"{pwd}/png/{img_name}")
     print(f"Original image size : {img.size}")
     # box=(left,top,right,bottom)
-    box = (450, 250, 1450, 780)
+    box = (900, 400, 3000, 1500)
     resized = img.crop(box)
     resized.save(f"{pwd}/resized_png/r-{img_name}")
     print("Resize Complete !")
@@ -16,5 +16,5 @@ def image_Crop(img_name):
 
 
 if __name__ == "__main__" :
-    x = image_Crop('throughput-1695355487000.png')
+    x = image_Crop('throughput-1695463203000.png')
     print(x)
