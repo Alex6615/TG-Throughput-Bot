@@ -18,7 +18,7 @@ from time_generator import ts_generator
 
 def get_Image(now, before_hours):
     pwd = os.getcwd()
-    driver = get_ChromeDriver()
+    driver = get_ChromeDriver(os="mac", headless=False)
     driver.get(f"http://{grafana}/login")
     locator_loginpage = (By.XPATH, '//*[@id="pageContent"]/div/div/div[3]/div/div/div[1]/img')
     try :
@@ -46,8 +46,8 @@ def get_Image(now, before_hours):
     locator_screenshot = (By.XPATH, '/html/body/img')
     try :
         driver.set_window_size(1920,1080)
-        time.sleep(2)
         WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_screenshot)) #最長等待10秒，每0.5秒檢查一次條件是否成立
+        time.sleep(2)
         driver.get_screenshot_as_file(f"{pwd}/png/throughput-{now}.png")
     except :
         print("screenshot load timeout !")
