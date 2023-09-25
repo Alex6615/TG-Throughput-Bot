@@ -46,9 +46,10 @@ def get_Image(now, before_hours):
     driver.get(f"http://{grafana}/render/d-solo/93LKRJP4z/es-goedge-log-traffic?orgId=1&refresh=30s&from={before_hours}&to={now}&panelId=69&width=1000&height=500&tz=Asia%2FTaipei")
     locator_screenshot = (By.XPATH, '/html/body/img')
     try :
-        driver.set_window_size(1920,1080)
+        
         WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_screenshot)) #最長等待10秒，每0.5秒檢查一次條件是否成立
-        time.sleep(2)
+        driver.set_window_size(1920,1080)
+        #time.sleep(2)
         driver.get_screenshot_as_file(f"{pwd}/png/throughput-{now}.png")
     except :
         print("screenshot load timeout !")
