@@ -12,7 +12,7 @@ from query_tools import *
 def SendPhoto(photo_name):
     if len(photo_name) == 0 :
         return 
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto?chat_id={Top10Alert}"
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto?chat_id={Top10Alert}&message_thread_id=2"
     # url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto?chat_id={MY_Group}"
     pwd = os.getcwd()
     file = f"{pwd}/resized_png/{photo_name}"
