@@ -1,4 +1,4 @@
 TELEGRAM_TOKEN=""
 MIS_ALERT=""
 Notify_Group=""
-Top10Alert="-1002089384112:2"
+Top10Alert=""
