@@ -90,7 +90,7 @@ def throughput_loop():
         # online user count
         print("Sending Online User Count.....")
         usercount = Get_Wking_UserCount()
-        reply = '🌏 Wking Online Users Now : ' + "<code>" + usercount + "</code>"
+        reply = '🌏 <b>Wking Online Users Now : </b>' + "<code>" + usercount + "</code>"
         #SendText(reply)
         try :
             ts_now, ts_before = ts_generator(range=10)
