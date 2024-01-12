@@ -91,12 +91,12 @@ def throughput_loop():
         print("Sending Online User Count.....")
         usercount = Get_Wking_UserCount()
         reply = '🌏 Wking Online Users Now : ' + "<code>" + usercount + "</code>"
-        SendText(reply)
+        #SendText(reply)
         try :
             ts_now, ts_before = ts_generator(range=10)
             img_name = get_Image(ts_now, ts_before)
             resized_image = image_Crop(img_name)
-            SendPhoto(resized_image)
+            SendPhoto(resized_image, text=reply)
             print("Sending photo Successful !")
         except Exception as e:
             print(e)
