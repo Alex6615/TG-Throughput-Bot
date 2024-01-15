@@ -22,7 +22,7 @@ from time_generator import ts_generator
 def get_Image(now, before_hours, serverId):
     pwd = os.getcwd()
     #driver = get_ChromeDriver(os="mac", headless=False)
-    driver = get_ChromeDriver(headless=False, os="mac")
+    driver = get_ChromeDriver()
     driver.get(f"http://{grafana}/login")
     locator_loginpage = (By.XPATH, '//*[@id="pageContent"]/div/div/div[3]/div/div/div[1]/img')
     try :
