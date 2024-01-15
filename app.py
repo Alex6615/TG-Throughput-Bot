@@ -95,7 +95,7 @@ def throughput_loop():
                 # online throughput image
                 img_name = get_Image(ts_now, ts_before, serverId=server)
                 resized_image = image_Crop(img_name)
-                SendPhoto(resized_image, text=usercount)
+                SendPhoto(resized_image, serverId=server, text=usercount)
         except Exception as e:
             print(e)
         time.sleep(60)

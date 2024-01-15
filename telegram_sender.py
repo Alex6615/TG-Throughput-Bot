@@ -8,12 +8,15 @@ except :
 from query_tools import *
 
 
+tgThreadMapping = {
+    9 : 2,
+    103 : 1060,
+}
 
-def SendPhoto(photo_name, text:str="test"):
+def SendPhoto(photo_name, serverId, text:str="test"):
     if len(photo_name) == 0 :
         return 
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto?chat_id={Top10Alert}&message_thread_id=2&caption={text}&parse_mode=html"
-    # url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto?chat_id={MY_Group}"
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto?chat_id={Top10Alert}&message_thread_id={tgThreadMapping[serverId]}&caption={text}&parse_mode=html"
     pwd = os.getcwd()
     file = f"{pwd}/resized_png/{photo_name}"
     files = {
