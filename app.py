@@ -24,8 +24,7 @@ from image_resize import image_Crop
 from time_generator import ts_generator
 from telegram_sender import SendPhoto, SendText
 from oclock import isoclock, minuteisfive, minuteisten
-from query_tools import Get_Wking_UserCount
-
+from query_tools import UserGetter
 
 t_token = TELEGRAM_TOKEN
 loop_status = True
@@ -36,6 +35,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     await context.bot.send_message(chat_id=update.effective_chat.id, text="📘 I'm a throughput Bot")
 
+'''
 async def throughput(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #print(update.message)
     if update.message.chat.id not in allow_groups :
@@ -59,6 +59,7 @@ async def count(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     x = Get_Wking_UserCount()
     await context.bot.send_message(chat_id=update.effective_chat.id, text=x)
+'''
 
 def Activate_bot():
     # pwd
@@ -66,19 +67,17 @@ def Activate_bot():
     if not os.path.exists(f"{pwd}/png"):
         os.mkdir(f"{pwd}/png")
     if not os.path.exists(f"{pwd}/resized_png"):
-        os.mkdir(f"{pwd}/resized_png")  
-    print("Hasaki 吹起來")   
+        os.mkdir(f"{pwd}/resized_png")    
     start_handler = CommandHandler('start', start)
-    count_handler = CommandHandler('count', count)
-    throughput_handler = CommandHandler('throughput', throughput)
     application = ApplicationBuilder().token(t_token).build()
     application.add_handler(start_handler)
-    application.add_handler(throughput_handler)
-    application.add_handler(count_handler)
     application.run_polling(timeout=10, poll_interval=5)
 
 def throughput_loop(): 
-    #session = requests.session()
+    serverIds = [
+        9, # wking 
+        103, #dobet
+    ]
     while(loop_status):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
@@ -87,21 +86,18 @@ def throughput_loop():
         if isten == False :
             time.sleep(45)
             continue
-        # online user count
-        print("Sending Online User Count.....")
-        usercount = Get_Wking_UserCount()
-        reply = '🌏 <b>Wking Online Users Now : </b>' + "<code>" + usercount + "</code>"
-        #SendText(reply)
         try :
             ts_now, ts_before = ts_generator(range=10)
-            img_name = get_Image(ts_now, ts_before)
-            resized_image = image_Crop(img_name)
-            SendPhoto(resized_image, text=reply)
-            print("Sending photo Successful !")
+            for server in serverIds :
+                # online user count
+                user = UserGetter(serverId=server)
+                usercount = user.Get_UserCount()
+                # online throughput image
+                img_name = get_Image(ts_now, ts_before, serverId=server)
+                resized_image = image_Crop(img_name)
+                SendPhoto(resized_image, text=usercount)
         except Exception as e:
             print(e)
-            #print("Sending photo Faliure !")
-            #SendText("Throughput Screenshot Faliure !")
         time.sleep(60)
 
 def main():
@@ -112,7 +108,6 @@ def main():
     print("loop added")
     process_lists.append(mp.Process(target=throughput_loop))
     process_lists[1].start()
-
     for process in process_lists :
         process.join()
 

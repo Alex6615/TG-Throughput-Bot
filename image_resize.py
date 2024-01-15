@@ -18,5 +18,5 @@ def image_Crop(img_name):
 
 
 if __name__ == "__main__" :
-    x = image_Crop('throughput-1695463203000.png')
+    x = image_Crop('throughput-1705305977000.png')
     print(x)

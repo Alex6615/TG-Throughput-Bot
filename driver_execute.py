@@ -15,8 +15,10 @@ except :
 from time_generator import ts_generator
 
 
-
-def get_Image(now, before_hours):
+# serverId
+# Wking 9
+# Dobet 103
+def get_Image(now, before_hours, serverId):
     pwd = os.getcwd()
     #driver = get_ChromeDriver(os="mac", headless=False)
     driver = get_ChromeDriver()
@@ -43,21 +45,20 @@ def get_Image(now, before_hours):
         WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_loginafter)) #最長等待10秒，每0.5秒檢查一次條件是否成立
     except :
         return
-    driver.get(f"http://{grafana}/render/d-solo/93LKRJP4z/es-goedge-log-traffic?orgId=1&refresh=30s&from={before_hours}&to={now}&panelId=69&width=1000&height=500&tz=Asia%2FTaipei")
+    driver.get(f"http://{grafana}/render/d-solo/93LKRJP4z/es-goedge-log-traffic?orgId=1&refresh=30s&var-serverId={serverId}&from={before_hours}&to={now}&panelId=69&width=1000&height=500&tz=Asia%2FTaipei")
     locator_screenshot = (By.XPATH, '/html/body/img')
     try :
         
         WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_screenshot)) #最長等待10秒，每0.5秒檢查一次條件是否成立
         driver.set_window_size(1920,1080)
-        #time.sleep(2)
-        driver.get_screenshot_as_file(f"{pwd}/png/throughput-{now}.png")
+        driver.get_screenshot_as_file(f"{pwd}/png/throughput-{now}-{serverId}.png")
     except :
         print("screenshot load timeout !")
-        driver.get_screenshot_as_file(f"{pwd}/png/throughput-{now}.png")
+        #driver.get_screenshot_as_file(f"{pwd}/png/throughput-{now}-{serverId}.png")
     finally :
         driver.quit()
-        return "throughput-" + now + ".png"
+        return "throughput-" + now + "-" + str(serverId) + ".png"
 
 if __name__ == "__main__" :
     now, before = ts_generator()
-    get_Image(now, before)
+    get_Image(now, before, serverId=9)
