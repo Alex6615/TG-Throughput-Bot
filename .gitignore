@@ -1,8 +1,8 @@
 # created by virtualenv automatically
 /bin
 /lib
-/png
-/resized_png
+#/png
+#/resized_png
 pyvenv.cfg
 __pycache__
 .DS_Store

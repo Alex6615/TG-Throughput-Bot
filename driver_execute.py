@@ -1,6 +1,7 @@
 import time
 import os
 
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
@@ -21,7 +22,7 @@ from time_generator import ts_generator
 def get_Image(now, before_hours, serverId):
     pwd = os.getcwd()
     #driver = get_ChromeDriver(os="mac", headless=False)
-    driver = get_ChromeDriver()
+    driver = get_ChromeDriver(headless=False, os="mac")
     driver.get(f"http://{grafana}/login")
     locator_loginpage = (By.XPATH, '//*[@id="pageContent"]/div/div/div[3]/div/div/div[1]/img')
     try :
@@ -45,11 +46,14 @@ def get_Image(now, before_hours, serverId):
         WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_loginafter)) #最長等待10秒，每0.5秒檢查一次條件是否成立
     except :
         return
-    driver.get(f"http://{grafana}/render/d-solo/93LKRJP4z/es-goedge-log-traffic?orgId=1&refresh=30s&var-serverId={serverId}&from={before_hours}&to={now}&panelId=69&width=1000&height=500&tz=Asia%2FTaipei")
-    locator_screenshot = (By.XPATH, '/html/body/img')
+    targetRenderUrl = f"http://{grafana}/d/93LKRJP4z/es-goedge-log-traffic?orgId=1&refresh=1m&var-serverId={serverId}&var-host=All&var-XFF=All&var-nid=&from={before_hours}&to={now}&viewPanel=88&width=1000&height=500&tz=Asia%2FTaipei"
+    #print(targetRenderUrl)
+    #driver.get(f"http://{grafana}/render/d-solo/93LKRJP4z/es-goedge-log-traffic?orgId=1&refresh=30s&var-serverId={serverId}&from={before_hours}&to={now}&panelId=69&width=1000&height=500&tz=Asia%2FTaipei")
+    driver.get(targetRenderUrl)
+    locator_screenshot = (By.XPATH, "//*[@id='pageContent']/div/div/div[3]/div/div[1]/div/div/div[2]/div[1]/div")
     try :
-        
         WebDriverWait(driver, 10, 1).until(EC.presence_of_element_located(locator_screenshot)) #最長等待10秒，每0.5秒檢查一次條件是否成立
+        webdriver.ActionChains(driver).move_by_offset(0,0).perform()
         driver.set_window_size(1920,1080)
         driver.get_screenshot_as_file(f"{pwd}/png/throughput-{now}-{serverId}.png")
     except :
@@ -61,4 +65,4 @@ def get_Image(now, before_hours, serverId):
 
 if __name__ == "__main__" :
     now, before = ts_generator()
-    get_Image(now, before, serverId=9)
+    get_Image(now, before, serverId=103)
