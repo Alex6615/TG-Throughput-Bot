@@ -103,6 +103,7 @@ def throughput_loop():
                     continue
                 resized_image = image_Crop(img_result)
                 SendPhoto(resized_image, serverId=server, text=usercount)
+            imgGetter.quitdriver()
         except Exception as e:
             print(e)
         time.sleep(60)
