@@ -100,9 +100,9 @@ def throughput_loop():
                 img_result = imgGetter.getImage(ts_now, ts_before, serverId=server)
                 if img_result == 0 :
                     SendText(text=usercount + "\n<b>img download failed</b>", serverId=server)
-                    continue
-                resized_image = image_Crop(img_result)
-                SendPhoto(resized_image, serverId=server, text=usercount)
+                else :
+                    resized_image = image_Crop(img_result)
+                    SendPhoto(resized_image, serverId=server, text=usercount)
             imgGetter.quitdriver()
         except Exception as e:
             print(e)
