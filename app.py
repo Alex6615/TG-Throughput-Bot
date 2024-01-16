@@ -19,12 +19,14 @@ except :
     from secrets.secret_telegram_local import TELEGRAM_TOKEN
 #from secret_telegram_local import TELEGRAM_TOKEN
 #from secret_account_local import allow_groups
-from driver_execute import get_Image
+from driver_execute import imageGetter
 from image_resize import image_Crop
 from time_generator import ts_generator
 from telegram_sender import SendPhoto, SendText
 from oclock import isoclock, minuteisfive, minuteisten
 from query_tools import UserGetter
+
+
 
 t_token = TELEGRAM_TOKEN
 loop_status = True
@@ -88,13 +90,18 @@ def throughput_loop():
             continue
         try :
             ts_now, ts_before = ts_generator(range=10)
+            imgGetter = imageGetter()
             for server in serverIds :
                 # online user count
                 user = UserGetter(serverId=server)
                 usercount = user.Get_UserCount()
                 # online throughput image
-                img_name = get_Image(ts_now, ts_before, serverId=server)
-                resized_image = image_Crop(img_name)
+                imgGetter.grafanaLogin()
+                img_result = imgGetter.get_Image(ts_now, ts_before, serverId=server)
+                if img_result == 0 :
+                    SendText(text=usercount + "\n<b>img download failed</b>", serverId=server)
+                    continue
+                resized_image = image_Crop(img_result)
                 SendPhoto(resized_image, serverId=server, text=usercount)
         except Exception as e:
             print(e)

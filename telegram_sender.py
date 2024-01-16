@@ -26,10 +26,10 @@ def SendPhoto(photo_name, serverId, text:str="test"):
     req.close()
 
 
-def SendText(text:str):
+def SendText(text:str, serverId):
     if len(text) == 0 :
         return 
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={Top10Alert}&text={text}&parse_mode=html&message_thread_id=2"
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={Top10Alert}&text={text}&parse_mode=html&message_thread_id={tgThreadMapping[serverId]}&parse_mode=html"
     # url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={MY_Group}&text={text}&parseMode=html"
     req = requests.post(url = url)
     req.close()
