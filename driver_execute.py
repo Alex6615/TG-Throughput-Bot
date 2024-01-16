@@ -21,8 +21,8 @@ class imageGetter :
     
     def __init__(self):
         self.pwd = os.getcwd()
-        self.driver = get_ChromeDriver(os="mac", headless=False)
-        #self.driver = get_ChromeDriver()
+        #self.driver = get_ChromeDriver(os="mac", headless=False)
+        self.driver = get_ChromeDriver()
 
     def grafanaLogin(self):
         self.driver.get(f"http://{grafana}/login")
