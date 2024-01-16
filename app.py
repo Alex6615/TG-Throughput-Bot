@@ -15,8 +15,8 @@ try :
     from secret_account import allow_groups
     from secret_telegram import TELEGRAM_TOKEN
 except :
-    from secrets.secret_account_local import allow_groups
-    from secrets.secret_telegram_local import TELEGRAM_TOKEN
+    from secrets.secret_account import allow_groups
+    from secrets.secret_telegram import TELEGRAM_TOKEN
 #from secret_telegram_local import TELEGRAM_TOKEN
 #from secret_account_local import allow_groups
 from driver_execute import imageGetter

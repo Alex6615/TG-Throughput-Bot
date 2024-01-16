@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 
 
-def ts_generator(range = 5):
+def ts_generator(range = 10):
     # now
     now = datetime.now()
     now_ts = str(round(now.timestamp())) + "000"
