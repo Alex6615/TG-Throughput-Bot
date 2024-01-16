@@ -97,7 +97,7 @@ def throughput_loop():
                 usercount = user.Get_UserCount()
                 # online throughput image
                 imgGetter.grafanaLogin()
-                img_result = imgGetter.get_Image(ts_now, ts_before, serverId=server)
+                img_result = imgGetter.getImage(ts_now, ts_before, serverId=server)
                 if img_result == 0 :
                     SendText(text=usercount + "\n<b>img download failed</b>", serverId=server)
                     continue
